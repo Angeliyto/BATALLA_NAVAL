@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="index_2.html"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <p style="text-align: center;">
+        <FONT FACE="courier new" Size=8 Color="white"><b>BATALLA NAVAL</b></FONT></p>
+        <p style="text-align: center;">
+            <FONT FACE="courier new" Size=5 Color="white"><b>TABLERO</b></FONT></p>
+    <br><br>
+    <p style="text-align: center;">
+        <FONT FACE="courier new" Size=6 Color="white"><b>0 1 2 3 4 5 6 7 8 9</b></FONT></p>
+   <center>
+    <div class="table">
+    <table id="tablero">
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+</div>
+</center> 
+    <br>
+    <center><button id="iniciar">Iniciar</button></center>
+    
+</body>
+<script>
+    generarbarcos();
+    disparar();
+    ganar();
+    function generarbarcos(){
+        var barcotamaño3 = 3;
+        var barcotamaño2 = 2;
+        var barcotamaño1 = 1;
+        var barcos = [barcotamaño3,barcotamaño2,barcotamaño2,barcotamaño1,barcotamaño1,barcotamaño1];
+        var tablero = document.getElementById("tablero");
+        var posicionx = Math.floor(Math.random() * 10);
+        var posiciony = Math.floor(Math.random() * 10);
+        var direccion = Math.floor(Math.random() * 2);
+        var barco = barcos[0];
+        var barcosgenerados = 0;
+       tablero.rows[posicionx].cells[posiciony].innerHTML = "🚢";
+        for (let i = 0; i < barcos.length; i++) {
+            if (direccion == 0) {
+                if (posicionx + barco < 10) {
+                    for (let j = 0; j < barco; j++) {
+                        tablero.rows[posicionx + j].cells[posiciony].innerHTML = "🚢";
+                    }
+                    barcosgenerados++;
+                    barco = barcos[barcosgenerados];
+                    posicionx = Math.floor(Math.random() * 10);
+                    posiciony = Math.floor(Math.random() * 10);
+                    direccion = Math.floor(Math.random() * 2);
+                }else{
+                    posicionx = Math.floor(Math.random() * 10);
+                    posiciony = Math.floor(Math.random() * 10);
+                    direccion = Math.floor(Math.random() * 2);
+                }
+            }else{
+                if (posiciony + barco < 10) {
+                    for (let j = 0; j < barco; j++) {
+                        tablero.rows[posicionx].cells[posiciony + j].innerHTML = "🚢";
+                    }
+                    barcosgenerados++;
+                    barco = barcos[barcosgenerados];
+                    posicionx = Math.floor(Math.random() * 10);
+                    posiciony = Math.floor(Math.random() * 10);
+                    direccion = Math.floor(Math.random() * 2);
+                }else{
+                    posicionx = Math.floor(Math.random() * 10);
+                    posiciony = Math.floor(Math.random() * 10);
+                    direccion = Math.floor(Math.random() * 2);
+                }
+            }
+        }
+
+    }
+    function disparar(){
+        var tablero = document.getElementById("tablero");
+        var iniciar = document.getElementById("iniciar");
+        iniciar.addEventListener("click", function(){
+            var posicionx = prompt("Ingrese la posicion en X");
+            var posiciony = prompt("Ingrese la posicion en Y");
+            if(tablero.rows[posiciony].cells[posicionx].innerHTML == "🚢"){
+                tablero.rows[posiciony].cells[posicionx].innerHTML = "🌊";
+                tablero.rows[posiciony].cells[posicionx].style.backgroundColor = "blue";
+                tablero.rows[posiciony].cells[posicionx].style.color = "white";
+                tablero.rows[posiciony].cells[posicionx].style.textAlign = "center";
+                tablero.rows[posiciony].cells[posicionx].style.fontWeight = "bold";
+                alert("Le diste a un barco");
+            }else{
+                tablero.rows[posiciony].cells[posicionx].innerHTML = " ";
+                tablero.rows[posiciony].cells[posicionx].style.backgroundColor = "blue";
+                tablero.rows[posiciony].cells[posicionx].style.color = "white";
+                tablero.rows[posiciony].cells[posicionx].style.textAlign = "center";
+                tablero.rows[posiciony].cells[posicionx].style.fontWeight = "bold";
+                alert("No le diste a un barco");
+            }
+    }
+    )
+    }
+    // function ganar(){
+    //     var tablero = document.getElementById("tablero");
+    //     var contador = 0;
+    //     for (let i = 0; i < tablero.rows.length; i++) {
+    //         for (let j = 0; j < tablero.rows[i].cells.length; j++) {
+    //             if (tablero.rows[i].cells[j].innerHTML == "🌊") {
+    //                 contador++;
+    //             }
+    //         }
+    //     }
+    //     if (contador == 0) {
+    //         alert("Ganaste");
+    //     }
+    // }
+
+</script>
+</html>
